@@ -29,7 +29,7 @@ const Navigation = ({ projects, favorites, mode, fetchProjects }) => {
             noWrap
             sx={{ color: mode ? '#444' : '#fff' }}
             align='center'>
-            Mercury
+            Task Mania
           </Typography>
         </a>
       </Toolbar>
