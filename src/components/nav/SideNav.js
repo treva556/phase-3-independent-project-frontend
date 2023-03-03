@@ -3,24 +3,24 @@ import '../../css/sidenav.css'
 import ProjectList from './Projectlist'
 import FavoriteList from './FavoriteList'
 import { Logo } from './Logo'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 import { Typography, Toolbar, Divider } from '@mui/material'
 import { Drawer } from '@mui/material'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const drawerWidth = 240
 
 const Navigation = ({ projects, favorites, mode, fetchProjects }) => {
-  let history = useHistory()
+ const navigate = useNavigate();
   const handleHomeClick = (event) => {
-    history.push('/projects')
+    navigate.push('/projects')
     fetchProjects()
   }
 
   return (
     <>
       <Toolbar className='flex'>
-        <a onClick={handleHomeClick} href='#' className='flex link'>
+       <a onClick={handleHomeClick} href='#' className='flex link'>
           <Logo />
           <Typography
             className='letter-spacing'
