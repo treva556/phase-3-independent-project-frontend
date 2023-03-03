@@ -20,7 +20,7 @@ const Navigation = ({ projects, favorites, mode, fetchProjects }) => {
   return (
     <>
       <Toolbar className='flex'>
-       <a onClick={handleHomeClick} href='#' className='flex link'>
+       <a onClick={handleHomeClick} href='/#' className='flex link'>
           <Logo />
           <Typography
             className='letter-spacing'
