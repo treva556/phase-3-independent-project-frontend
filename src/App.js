@@ -30,13 +30,13 @@ const App = () => {
   }, [])
 
   const fetchProjects = () => {
-    fetch('http://127.0.0.1:9292/projects')
+    fetch('http://localhost:9292/projects')
       .then((res) => res.json())
       .then((data) => setProjects(data))
   }
 
   const patchProjects = (project) => {
-    fetch(`/api/projects/${project.id}`, {
+    fetch(`http://localhost:9292/projects/${project.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const App = () => {
   }
 
   const postProjects = (project) => {
-    fetch('http://127.0.0.1:9292/projects/', {
+    fetch('http://localhost:9292/projects/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
