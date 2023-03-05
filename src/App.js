@@ -30,7 +30,7 @@ const App = () => {
   }, [])
 
   const fetchProjects = () => {
-    fetch('http://127.0.0.1:9292/projects/projects')
+    fetch('http://127.0.0.1:9292/projects')
       .then((res) => res.json())
       .then((data) => setProjects(data))
   }
@@ -51,7 +51,7 @@ const App = () => {
   }
 
   const postProjects = (project) => {
-    fetch('http://127.0.0.1:9292/projects/projects/', {
+    fetch('http://127.0.0.1:9292/projects/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const App = () => {
       (project) => project.id !== deleteProject.id
     )
 
-    fetch(`http://127.0.0.1:9292/projects/projects/${deleteProject.id}`, {
+    fetch(`http://127.0.0.1:9292/projects/${deleteProject.id}`, {
       method: 'DELETE',
     })
 
@@ -95,6 +95,7 @@ const App = () => {
   })
 
   return (
+    <Login/>
     <ThemeProvider theme={appliedTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />

@@ -62,7 +62,7 @@ const Tasks = ({
       updatedTasks = tasks.filter((task) => task.id !== updatedTask.id)
     }
 
-    fetch(`http://127.0.0.1:9292/projects/tasks/${updatedTask.id}`, {
+    fetch(`http://127.0.0.1:9292/tasks/${updatedTask.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
