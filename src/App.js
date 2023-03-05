@@ -30,7 +30,7 @@ const App = () => {
   }, [])
 
   const fetchProjects = () => {
-    fetch('/api/projects')
+    fetch('http://127.0.0.1:9292/projects/projects')
       .then((res) => res.json())
       .then((data) => setProjects(data))
   }
@@ -51,7 +51,7 @@ const App = () => {
   }
 
   const postProjects = (project) => {
-    fetch('/api/projects/', {
+    fetch('http://127.0.0.1:9292/projects/projects/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const App = () => {
       (project) => project.id !== deleteProject.id
     )
 
-    fetch(`/api/projects/${deleteProject.id}`, {
+    fetch(`http://127.0.0.1:9292/projects/projects/${deleteProject.id}`, {
       method: 'DELETE',
     })
 

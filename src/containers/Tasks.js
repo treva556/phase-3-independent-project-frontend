@@ -62,7 +62,7 @@ const Tasks = ({
       updatedTasks = tasks.filter((task) => task.id !== updatedTask.id)
     }
 
-    fetch(`/api/tasks/${updatedTask.id}`, {
+    fetch(`http://127.0.0.1:9292/projects/tasks/${updatedTask.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const Tasks = ({
   const handleDeleteTask = (deleteTask) => {
     const updatedTasks = tasks.filter((task) => task.id !== deleteTask.id)
 
-    fetch(`/api/tasks/${deleteTask.id}`, {
+    fetch(`http://127.0.0.1:9292/projects/tasks/${deleteTask.id}`, {
       method: 'DELETE',
     })
     setTasks(updatedTasks)
