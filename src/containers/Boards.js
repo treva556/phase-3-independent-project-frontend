@@ -17,7 +17,7 @@ const Boards = ({
   const handleDeleteBoard = (deleteBoard) => {
     const updatedBoards = boards.filter((board) => board.id !== deleteBoard.id)
 
-    fetch(`http://127.0.0.1:9292/boards/${deleteBoard.id}`, {
+    fetch(`http://localhost:9292/boards/${deleteBoard.id}`, {
       method: 'DELETE',
     })
 
@@ -29,7 +29,7 @@ const Boards = ({
       board.id === updatedBoard.id ? updatedBoard : board
     )
 
-    fetch(`http://127.0.0.1:9292/boards/${updatedBoard.id}`, {
+    fetch(`http://localhost:9292/boards/${updatedBoard.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ const Boards = ({
   }
 
   const handleCreateBoard = (newBoard) => {
-    fetch('http://127.0.0.1:9292/projects/boards/', {
+    fetch('http://localhost:9292/boards/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -72,7 +72,7 @@ const App = () => {
       (project) => project.id !== deleteProject.id
     )
 
-    fetch(`http://127.0.0.1:9292/projects/${deleteProject.id}`, {
+    fetch(`http://localhost:9292/projects/${deleteProject.id}`, {
       method: 'DELETE',
     })
 
@@ -95,7 +95,6 @@ const App = () => {
   })
 
   return (
-    <Login/>
     <ThemeProvider theme={appliedTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
