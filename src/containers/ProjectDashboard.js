@@ -1,5 +1,3 @@
-
-
 import * as React from 'react'
 import { ProjectColors } from '../helpers/ProjectColors'
 import DropdownMenu from '../components/DropdownMenu'
