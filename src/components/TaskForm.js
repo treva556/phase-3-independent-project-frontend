@@ -1,50 +1,73 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-function TaskForm({ onAdd }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
+function TaskForm({tasks, setTasks}) {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    due_date: "",
+    completion_status: false,
+  });
   function handleSubmit(e) {
     e.preventDefault();
-    const task = { title, description };
-    axios.post("/api/tasks", task).then((response) => {
-      onAdd(response.data);
-      setTitle("");
-      setDescription("");
+    fetch("http://localhost:9292/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTasks([...tasks, data]);
+      });
+  }
+  //handle formdata change
+  function handleChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
   }
-
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="title" className="form-label">
-          Title
-        </label>
+    <div className="new-task">
+      <form onSubmit={handleSubmit} action="post">
+        <label for="title">Title:</label>
         <input
           type="text"
-          className="form-control"
           id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          placeholder="title.."
         />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="description" className="form-label">
-          Description
-        </label>
-        <textarea
-          className="form-control"
+        <label for="description">Description:</label>
+        <input
+          type="text"
           id="description"
-          rows="3"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        ></textarea>
-      </div>
-      <button type="submit" className="btn btn-primary">
-        Add Task
-      </button>
-    </form>
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="description..."
+        />
+        <label for="due_date">Due date (yyyy-mm-dd) :</label>
+        <input
+          type="text"
+          id="due_date"
+          name="due_date"
+          value={formData.due_date}
+          onChange={handleChange}
+          placeholder="due date..."
+        />
+        <label for="completion status">Completed ?</label>
+        <select id="completion_status" name="completion_status" onChange={handleChange}>
+          <option value="false">False</option>
+          <option value="true">True</option>
+        </select>
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
   );
 }
 
