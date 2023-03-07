@@ -1,147 +1,68 @@
-import * as React from 'react'
-import lightTheme from './theme/light-theme'
-import darkTheme from './theme/dark-theme'
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+function App() {
+  const [tasks, setTasks] = useState([]);
 
-import Login from './containers/Login'
-import Projects from './containers/Projects'
-import ProjectDashboard from './containers/ProjectDashboard'
-
-import Layout from './containers/Layout'
-import Box from '@mui/material/Box'
-
-const App = () => {
-  // handle dark mode
-  const [mode, setMode] = React.useState(true)
-  const appliedTheme = createTheme(mode ? lightTheme : darkTheme)
-
-  const toggleTheme = () => {
-    setMode(!mode)
-  }
-
-  // handle projects
-  const [projects, setProjects] = React.useState([])
-
-  React.useEffect(() => {
-    fetchProjects()
-  }, [])
-
-  const fetchProjects = () => {
-    fetch('http://localhost:9292/projects')
-      .then((res) => res.json())
-      .then((data) => setProjects(data))
-  }
-
-  const patchProjects = (project) => {
-    fetch(`http://localhost:9292/projects/${project.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        accept: 'application/json',
-      },
-      body: JSON.stringify({
-        favorite: project.favorite,
-        title: project.title,
-        color: project.color,
-      }),
-    })
-  }
-
-  const postProjects = (project) => {
-    fetch('http://localhost:9292/projects/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        accept: 'application/json',
-      },
-      body: JSON.stringify(project),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProjects((prevProjects) => {
-          return [...prevProjects, data]
-        })
-      })
-  }
-
-  const handleDeleteProject = (deleteProject) => {
-    const updatedProjects = projects.filter(
-      (project) => project.id !== deleteProject.id
-    )
-
-    fetch(`http://localhost:9292/projects/${deleteProject.id}`, {
-      method: 'DELETE',
-    })
-
-    setProjects(updatedProjects)
-  }
-
-  const handleUpdatingProject = (changedProject) => {
-    patchProjects(changedProject)
-
-    const updatedProjects = projects.map((project) =>
-      project.id === changedProject.id ? changedProject : project
-    )
-    setProjects(updatedProjects)
-  }
-
-  //handle search
-  const [search, setSearch] = React.useState('')
-  const filterProjects = projects.filter((project) => {
-    return project.title.toLowerCase().includes(search.toLowerCase())
-  })
+  useEffect(() => {
+    axios.get("/api/tasks").then((response) => {
+      setTasks(response.data);
+    });
+  }, []);
 
   return (
-    <ThemeProvider theme={appliedTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <Router>
-          <Layout
-            toggleTheme={toggleTheme}
-            mode={mode}
-            projects={projects}
-            search={search}
-            setSearch={setSearch}
-            fetchProjects={fetchProjects}>
-            <Route
-              exact
-              path='/'
-              render={(routerProps) => <Login {...routerProps} />}
-            />
-            <Route
-              exact
-              path='/projects'
-              render={(routerProps) => (
-                <Projects
-                  {...routerProps}
-                  projects={filterProjects}
-                  mode={mode}
-                  patchProjects={patchProjects}
-                  postProjects={postProjects}
-                  handleUpdatingProject={handleUpdatingProject}
-                  handleDeleteProject={handleDeleteProject}
-                />
-              )}
-            />
-            <Route
-              exact
-              path='/projects/:id'
-              render={(routerProps) => (
-                <ProjectDashboard
-                  {...routerProps}
-                  mode={mode}
-                  handleUpdatingProject={handleUpdatingProject}
-                  handleDeleteProject={handleDeleteProject}
-                />
-              )}
-            />
-          </Layout>
-        </Router>
-      </Box>
-    </ThemeProvider>
-  )
+    <Router>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container-fluid">
+          <Link to="/" className="navbar-brand">
+            Task Manager
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link to="/" className="nav-link">
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/tasks" className="nav-link">
+                  Tasks
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div className="container mt-3">
+        
+          <Route exact path="/">
+            <h1>Home</h1>
+          </Route>
+          <Route path="/tasks">
+            <h1>Tasks</h1>
+            <ul>
+              {tasks.map((task) => (
+                <li key={task.id}>{task.title}</li>
+              ))}
+            </ul>
+          </Route>
+        
+      </div>
+    </Router>
+  );
 }
-export default App
+
+export default App;
