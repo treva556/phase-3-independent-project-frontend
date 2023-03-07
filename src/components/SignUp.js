@@ -12,7 +12,7 @@ function SignUp({setUser}) {
   const navigate = useNavigate();
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:9292/signup", {
+    fetch("http://127.0.0.1:9393/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

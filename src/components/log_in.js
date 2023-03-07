@@ -16,7 +16,7 @@ function Log_in({setUser}) {
   function handleSubmit(e) {
     e.preventDefault();
     //make an api call to login user
-    fetch("http://localhost:9292/login", {
+    fetch("http://127.0.0.1:9393/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

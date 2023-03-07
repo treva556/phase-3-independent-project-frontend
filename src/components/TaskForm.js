@@ -11,7 +11,7 @@ function TaskForm({tasks, setTasks}) {
   });
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:9292/tasks", {
+    fetch("http://127.0.0.1:9393/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
